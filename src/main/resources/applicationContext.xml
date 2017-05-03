@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+
+      http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-4.1.xsd
+      http://www.springframework.org/schema/aop
+      http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+      http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task-4.1.xsd
+      ">
+
+
+    <!-- ############################################################################# -->
+    <!-- ################################AOP Definition############################## -->
+    <!-- ############################################################################# -->
+    <aop:aspectj-autoproxy/>
+
+    <!-- ############################################################################# -->
+    <!-- ################################Base Definition############################## -->
+    <!-- ############################################################################# -->
+    <context:annotation-config/>
+
+    <mvc:annotation-driven />
+
+    <!-- 扫描包 -->
+    <context:component-scan base-package="com.zjpz" use-default-filters="true"></context:component-scan>
+    <!-- 扫描包 -->
+    <context:component-scan base-package="com" use-default-filters="true"></context:component-scan>
+    <task:executor id="executor" pool-size="5" />
+    <task:scheduler id="scheduler" pool-size="10" />
+    <task:annotation-driven executor="executor" scheduler="scheduler" />
+
+
+    <!-- 拦截器过滤地址,配置不需要拦截的地址。 -->
+    <!--<bean id="authenticationInterceptor" class="com.zjpz.intercepter.AutoLogonIfCookieInterceptor">-->
+        <!--<property name="mustcheckUrls">-->
+            <!--<list>-->
+              <!--  <value>index.html</value>
+                <value>chengshizu</value>
+                <value>addchengshizu</value>
+                <value>chengshizudan</value>
+                <value>updatechengshizu</value>
+                <value>banchengshizu</value>
+                <value>city</value>
+                <value>getCityChild</value>
+                <value>addcity</value>
+                <value>citydan</value>
+                <value>updatecity</value>
+                <value>bancity</value>
+                <value>area</value>
+                <value>getAreaChild</value>
+                <value>addarea</value>
+                <value>areadan</value>
+                <value>updatearea</value>
+                <value>banarea</value>
+                <value>Jsonshangquan</value>
+                <value>shangquan</value>
+                <value>fenyeshangquan</value>
+                <value>addshangquan</value>
+                <value>shangquandan</value>
+                <value>updateshangquan</value>
+                <value>banshangquan</value>
+                <value>Jsonjiaotong</value>
+                <value>jiaotong</value>
+                <value>getStraChild</value>
+                <value>addjiaotong</value>
+                <value>xianludan</value>
+                <value>updatexianlu</value>
+                <value>banjiaotng</value>
+                <value>Jsonzhandian</value>
+                <value>zhandian</value>
+                <value>fenyezhandian</value>
+                <value>zhandiandan</value>
+                <value>addzhandian</value>
+                <value>updatezhandian</value>
+                <value>banzhandian</value>
+                <value>/outUserInfo/goRegisterUserInfo.html</value>-->
+                <!--<value>/depute/saveDepute</value>-->
+                <!--<value>/opportunityManage/saveShopsPut</value>-->
+                <!--<value>/events/openShopTest</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!-- 权限拦截器。 -->
+    <!--<bean id="authorityInterceptor" class="com.zjpz.intercepter.AuthorityInterceptor">-->
+        <!--<property name="mustcheckUrls">-->
+            <!--<list>-->
+                <!--<value>index.html</value>-->
+                <!--<value>login.html</value>-->
+                <!--<value>logon</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="tokenInterceptor" class="com.zjpz.intercepter.TokenInterceptor"/>-->
+
+    <!--  拦截器 -->
+    <!--<mvc:interceptors>-->
+        <!--<ref bean="authenticationInterceptor"/>-->
+        <!--<ref bean="authorityInterceptor"/>-->
+        <!--<ref bean="tokenInterceptor"/>-->
+    <!--</mvc:interceptors>-->
+
+    <!--<context:property-placeholder-->
+            <!--location="classpath*:zjpz-default.properties"-->
+            <!--system-properties-mode="FALLBACK"-->
+            <!--ignore-unresolvable="true"-->
+            <!--ignore-resource-not-found="false"-->
+            <!--file-encoding="UTF-8"-->
+            <!--local-override="false"/>-->
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- set the max upload size100MB -->
+        <property name="maxUploadSize">
+            <value>8000000</value>
+        </property>
+        <property name="maxInMemorySize">
+            <value>8000</value>
+        </property>
+    </bean>
+
+    <!-- 缓存服务器 -->
+    <!--<bean id="whalinMemcachedPool"-->
+          <!--class="com.whalin.MemCached.SockIOPool"-->
+          <!--factory-method="getInstance"-->
+          <!--init-method="initialize"-->
+          <!--destroy-method="shutDown">-->
+        <!--<constructor-arg value="my089MemcachedPool"/>-->
+        <!--<property name="servers">-->
+            <!--<list>-->
+                <!--<value>${zjpz.memcached.servers.0}</value>-->
+                <!--<value>${zjpz.memcached.servers.1}</value>-->
+            <!--</list>-->
+        <!--</property>-->
+        <!--<property name="initConn" value="20"/>-->
+        <!--<property name="minConn" value="10"/>-->
+        <!--<property name="maxConn" value="160"/>-->
+        <!--<property name="maintSleep" value="3000"/>-->
+        <!--<property name="maxIdle" value="600000"/>-->
+        <!--<property name="maxBusyTime" value="600000"/>-->
+        <!--<property name="nagle" value="false"/>-->
+        <!--<property name="socketTO" value="3000"/>-->
+        <!--<property name="socketConnectTO" value="0"/>-->
+        <!--<property name="failover" value="true"/>-->
+        <!--<property name="aliveCheck" value="true"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="whalinMemcachedClient" class="com.whalin.MemCached.MemCachedClient">-->
+        <!--<constructor-arg type="java.lang.String" value="my089MemcachedPool"/>-->
+        <!--<constructor-arg type="boolean" value="true"/>-->
+        <!--<constructor-arg type="boolean" value="true"/>-->
+        <!--<constructor-arg type="java.lang.ClassLoader">-->
+            <!--<null/>-->
+        <!--</constructor-arg>-->
+        <!--<constructor-arg type="com.whalin.MemCached.ErrorHandler">-->
+            <!--<bean class="com.zjpz.service.impl.WhalinMemcachedService$DefaultErrorHandler"/>-->
+        <!--</constructor-arg>-->
+        <!--<property name="sanitizeKeys" value="false"/>-->
+    <!--</bean>-->
+
+
+
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">max.html</prop>
+            </props>
+        </property>
+    </bean>
+    <!--<import resource="classpath*:applicationContext-db.xml"/>-->
+    <!--<bean class="com.zjpz.util.BeanUtil"/>-->
+
+    <!--<bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject" ref="initialCache" />-->
+        <!--<property name="targetMethod" value="initCacheData" />-->
+        <!--<property name="concurrent" value="false" />-->
+    <!--</bean>-->
+
+    <!--<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">-->
+        <!--&lt;!&ndash; see the example of method invoking job above &ndash;&gt;-->
+        <!--<property name="jobDetail" ref="jobDetail" />-->
+        <!--&lt;!&ndash; 10 seconds &ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="startDelay" value="5000" />&ndash;&gt;-->
+        <!--&lt;!&ndash; repeat every 50 seconds &ndash;&gt;-->
+        <!--<property name="repeatInterval" value="5000" />-->
+        <!--<property name="repeatCount" value="0" />-->
+    <!--</bean>-->
+
+    <!--<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">-->
+        <!--<property name="triggers">-->
+            <!--<list>-->
+                <!--<ref bean="simpleTrigger" />-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+
+
+
+
+</beans>
