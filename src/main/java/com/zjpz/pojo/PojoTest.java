@@ -13,7 +13,7 @@ import java.util.Date;
 public class PojoTest {
 
     public static int count = 0;
-
+    public static int hello;
     public static void main(String[] args) {
         final PojoTest data = new PojoTest();
         for (int i = 0; i < 10; i++) {
