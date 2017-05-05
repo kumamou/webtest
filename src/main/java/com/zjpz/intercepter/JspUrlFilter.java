@@ -35,5 +35,4 @@ public class JspUrlFilter implements Filter {
     public void init(FilterConfig config) throws ServletException {
 
     }
-
 }
